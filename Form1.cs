@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,21 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Labaratory_2b
 {
-    public partial class Form1 : Form
+        public partial class Form1 : Form
     {
-        Circle round;
+        Round round;
         Cylinder cylinder;
-
         public Form1()
         {
             InitializeComponent();
-            round = new Circle();
+            round = new Round();
             cylinder = new Cylinder();
+            DialogResult result = MessageBox.Show("Do you want to import data from file?", "Cancle", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;
+                string filename = openFileDialog1.FileName;              
+                BinaryReader br = new BinaryReader(File.Open(filename, FileMode.Open));
+                RichTextBoxResult.Text += br.ReadString();
+                br.Close();
+                MessageBox.Show("File open");
+            }
         }
-
+                
         private void button1_Click(object sender, EventArgs e)
         {
             round.Radius = Convert.ToDouble(text_radius.Text == "" ? "0" : text_radius.Text);
@@ -31,14 +42,14 @@ namespace Labaratory_2b
             cylinder.Radius = Convert.ToDouble(text_radius.Text == "" ? "0" : text_radius.Text);
             richTextBoxCylinder.Text = cylinder.ToString();
 
-            dataGridView1.Rows.Add(text_radius.Text, text_Height.Text, round.Square(),
+            dataGridView1.Rows.Add(text_radius.Text, text_Height.Text, round.Square(), 
                 round.Length(), cylinder.Volume());
-
+             
         }
 
         private void StartCalculating_Click(object sender, EventArgs e)
         {
-            RichTextBoxResult.Text = GetResult();
+            RichTextBoxResult.Text = GetResult();           
         }
 
         public string Max_Square()
@@ -47,11 +58,11 @@ namespace Labaratory_2b
             int number = 0;
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                if (Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value) > max_square)
+                if (Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value) > max_square)                        
                 {
                     max_square = Convert.ToDouble(dataGridView1.Rows[i].Cells[2].Value);
                     number = i;
-                }
+                 }               
             }
             return "\nMax area of a circle = " + Convert.ToString(max_square);
         }
@@ -63,7 +74,7 @@ namespace Labaratory_2b
             {
                 average_volume += Convert.ToDouble(dataGridView1.Rows[i].Cells[4].Value);
             }
-            average_volume = average_volume / Convert.ToDouble((dataGridView1.RowCount - 1));
+            average_volume = average_volume / Convert.ToDouble((dataGridView1.RowCount- 1));
 
             return "\nAverage volume of a cylinder = " + Convert.ToString(average_volume);
         }
@@ -73,22 +84,23 @@ namespace Labaratory_2b
             return Max_Square() + Average_Volume();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            base.OnFormClosing(e);
 
-        }
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void RichTextBoxResult_TextChanged(object sender, EventArgs e)
-        {
-
+            DialogResult result = MessageBox.Show("Do you want to save data to a file?", "Cancle", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;                
+                string filename = saveFileDialog1.FileName;
+                BinaryWriter bw = new BinaryWriter(File.Open(filename, FileMode.OpenOrCreate));
+                bw.Write(RichTextBoxResult.Text.ToString());
+                bw.Close();
+                MessageBox.Show("File save!");
+            }            
         }
     }
 }
