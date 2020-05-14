@@ -1,12 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
 
 namespace Labaratory_2b
 {
-    partial class Form1
+     partial class Form1
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -53,6 +58,8 @@ namespace Labaratory_2b
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,7 +81,6 @@ namespace Labaratory_2b
             this.Label_radius.Size = new System.Drawing.Size(52, 17);
             this.Label_radius.TabIndex = 1;
             this.Label_radius.Text = "Radius";
-            this.Label_radius.Click += new System.EventHandler(this.label1_Click);
             // 
             // label_height
             // 
@@ -103,10 +109,10 @@ namespace Labaratory_2b
             // 
             this.labelRound.AutoSize = true;
             this.labelRound.Location = new System.Drawing.Point(83, 142);
-            this.labelRound.Name = "labelCircle";
+            this.labelRound.Name = "labelRound";
             this.labelRound.Size = new System.Drawing.Size(50, 17);
             this.labelRound.TabIndex = 5;
-            this.labelRound.Text = "Circle";
+            this.labelRound.Text = "Round";
             // 
             // labelCylinder
             // 
@@ -120,11 +126,10 @@ namespace Labaratory_2b
             // richTextBoxRound
             // 
             this.richTextBoxRound.Location = new System.Drawing.Point(12, 172);
-            this.richTextBoxRound.Name = "richTextBoxCircle";
+            this.richTextBoxRound.Name = "richTextBoxRound";
             this.richTextBoxRound.Size = new System.Drawing.Size(211, 130);
             this.richTextBoxRound.TabIndex = 7;
             this.richTextBoxRound.Text = "";
-            this.richTextBoxRound.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // richTextBoxCylinder
             // 
@@ -141,7 +146,6 @@ namespace Labaratory_2b
             this.RichTextBoxResult.Size = new System.Drawing.Size(282, 130);
             this.RichTextBoxResult.TabIndex = 10;
             this.RichTextBoxResult.Text = "";
-            this.RichTextBoxResult.TextChanged += new System.EventHandler(this.RichTextBoxResult_TextChanged);
             // 
             // Result
             // 
@@ -203,6 +207,15 @@ namespace Labaratory_2b
             this.Column5.HeaderText = "Volume of a cylinder";
             this.Column5.Name = "Column5";
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "txt";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "(*txt.)|*txt.";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -223,7 +236,6 @@ namespace Labaratory_2b
             this.Controls.Add(this.calculate);
             this.Name = "Form1";
             this.Text = "Lab_2";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -251,5 +263,7 @@ namespace Labaratory_2b
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
