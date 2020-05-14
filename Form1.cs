@@ -13,12 +13,12 @@ namespace Labaratory_2b
 {
         public partial class Form1 : Form
     {
-        Round round;
+        Circle round;
         Cylinder cylinder;
         public Form1()
         {
             InitializeComponent();
-            round = new Round();
+            round = new Circle();
             cylinder = new Cylinder();
             DialogResult result = MessageBox.Show("Do you want to import data from file?", "Cancle", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
